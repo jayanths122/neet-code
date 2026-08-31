@@ -2,6 +2,7 @@ package com.neetcode.arrays;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class Solutions {
@@ -74,5 +75,25 @@ public class Solutions {
             runningProduct = runningProduct * nums[i];
         }
         return output;
+    }
+
+    // Eg: nums: [ 100, 4, 200, 3, 2, 1 ]
+    public int longestConsecutive(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int num: nums) {
+            set.add(num);
+        }
+        int longest = 0;
+        for (int num: set) {
+            int sequence = 1;
+            if (set.contains(num - 1)) {
+                continue;
+            }
+            while (set.contains(num + sequence)) {
+                sequence += 1;
+            }
+            longest = Math.max(sequence, longest);
+        }
+        return longest;
     }
 }
