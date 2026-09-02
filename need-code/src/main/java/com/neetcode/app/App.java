@@ -1,7 +1,7 @@
 package com.neetcode.app;
 
-// import com.neetcode.strings.Solutions;
-import com.neetcode.arrays.Solutions;
+import com.neetcode.strings.Solutions;
+// import com.neetcode.arrays.Solutions;
 
 import java.util.List;
 
@@ -25,10 +25,11 @@ public class App {
         // for (List<String> list: ags) {
         //     System.out.println(list.toString());
         // } 
-        int[] nums = new int[]{1, 2, 3, 4};
-        int[] product = Solutions.productExceptSelfO_n_Memory(nums);
-        for(int num: product) {
-            System.out.print(num + ", ");
-        }
+        // int[] nums = new int[]{1, 2, 3, 4};
+        // int[] product = Solutions.productExceptSelfO_n_Memory(nums);
+        // for(int num: product) {
+        //     System.out.print(num + ", ");
+        // }
+        Solutions.isPalindrome("A man, a plan, a canal: Panama");
     }
 }

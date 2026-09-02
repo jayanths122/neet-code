@@ -1,5 +1,6 @@
 package com.neetcode.strings;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,5 +60,47 @@ public class Solutions {
             anagrams.get(frequencyString).add(str);
         }
         return anagrams.values().stream().toList();
-    } 
+    }
+    
+    public static boolean isPalindromeTerrible(String s) {
+        // abba
+        ArrayDeque<String> stack = new ArrayDeque<>();
+        for (int i = 0; i < Math.abs(s.length() / 2); i++) {
+            if (Character.isLetter(s.charAt(i))) {
+                System.out.println("Adding to stack: " + String.valueOf(s.charAt(i)).toLowerCase());
+                stack.add(String.valueOf(s.charAt(i)).toLowerCase());
+            }
+        }
+        for (int i = Math.abs(s.length() / 2); i < s.length(); i++) {
+            System.out.println("Peeking last: " + stack.peekLast());
+            if (Character.isLetter(s.charAt(i)) && stack.peekLast().equals(String.valueOf(s.charAt(i)).toLowerCase())) {
+                String popped = stack.pollLast();
+                System.out.println("Popping from stack: " + popped);
+            }
+        }
+        return (stack.size() == 0);
+    }
+
+    public static boolean isPalindrome(String s) {
+        int start = 0;
+        int end = s.length() - 1;
+        String l = s.toLowerCase();
+        while (start < end) {
+            if (!Character.isLetterOrDigit(l.charAt(start))) {
+                start += 1;
+                continue;
+            }
+            if (!Character.isLetterOrDigit(l.charAt(end))) {
+                end -= 1;
+                continue;
+            }
+            if (l.charAt(start) != l.charAt(end)) {
+                return false;
+            } else {
+                start += 1;
+                end -= 1;
+            }
+        }
+        return true;
+    }
 }
