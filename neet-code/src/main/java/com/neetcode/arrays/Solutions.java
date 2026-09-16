@@ -1,6 +1,7 @@
 package com.neetcode.arrays;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,13 +33,7 @@ public class Solutions {
         }
         return finalList.stream().mapToInt(Integer::intValue).toArray();
     }
-    
 
-    // nums = [2, 3, 4, 5]
-    // result = [ 60, 40, 30, 24 ]
-    // prefix = [ 1, 2, 6, 24 ]
-    // postfix = [ 60, 20, 5, 1 ]
-    // product = [ 60, 40, 30, 24 ]
     public static int[] productExceptSelf(int[] nums) {
         int[] prefix = new int[nums.length];
         int[] postfix = new int[nums.length];
@@ -59,9 +54,6 @@ public class Solutions {
         return product;
     }
 
-    // nums = [1, 2, 3, 4]
-    // output = [ 1, 1, 2, 6 ]
-    // Required = [ 24, 12, 8, 6 ]
     public static int[] productExceptSelfO_n_Memory(int[] nums) {
         int runningProduct = 1;
         int[] output = new int[nums.length];
@@ -95,5 +87,51 @@ public class Solutions {
             longest = Math.max(sequence, longest);
         }
         return longest;
+    }
+    
+    public int[] twoSum2(int[] numbers, int target) {
+        int left = 0;
+        int right = numbers.length - 1;
+        while (left < right) {
+            int sum = numbers[left] + numbers[right];
+            if (sum == target) {
+                return new int[]{left+1, right+1};
+            } else if (sum > target) {
+                right--;
+            } else {
+                left++;
+            }
+
+        }
+        return new int[]{-1, -1};
+    }
+
+    // Input: nums = [-1,0,1,2,-1,-4]
+    // Output: [[-1,-1,2],[-1,0,1]]
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> triplets = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i-1]) {
+                continue;
+            }
+            int left = i+1;
+            int right = nums.length-1;
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum == 0) {
+                    triplets.add(Arrays.asList(nums[i], nums[right], nums[left]));
+                    left++;
+                    right--;
+                    while (left < right && nums[left] == nums[left-1]) left++;
+                    while (left < right && nums[right] == nums[right+1]) right--;
+                } else if (sum > 0) {
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+        return triplets;
     }
 }
