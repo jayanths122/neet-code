@@ -3,6 +3,7 @@ package com.neetcode.strings;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class Solutions {
@@ -103,4 +104,35 @@ public class Solutions {
         }
         return true;
     }
+
+    public static int lengthOfLongestSubstring(String s) {
+        // pwwkew
+        HashSet<Character> seen = new HashSet<>();
+        int maxCount = 0;
+        int left = 0;
+        for (int right = 0; right < s.length(); right++) {
+            while (seen.contains(s.charAt(right))) {
+                seen.remove(s.charAt(left));
+                left++;
+            }
+            seen.add(s.charAt(right));
+            maxCount = Math.max(maxCount, right - left + 1);
+        }
+        return maxCount;   
+    }
+
+    public static int lengthOfLongestSubstring2(String s) {
+        int[] last = new int[128];
+        java.util.Arrays.fill(last, -1);
+        int max = 0, start = 0;
+        for (int end = 0; end < s.length(); end++) {
+            int c = s.charAt(end); 
+            if (last[c] >= start)
+                start = last[c] + 1;
+            last[c] = end;
+            max = Math.max(max, end - start + 1);
+        }
+        return max;
+    }
+
 }

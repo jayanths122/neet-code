@@ -134,4 +134,64 @@ public class Solutions {
         }
         return triplets;
     }
+
+    // Input: height = [1,8,6,2,5,4,8,3,7]
+    public int maxArea(int[] height) {
+        int area = 0;
+        int left = 0;
+        int right = height.length-1;
+        while (left < right) {
+            area = Math.max(area, ((right - left) * Math.min(height[left], height[right])));
+            if (height[right] > height[left]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return area;
+    }
+
+    public int trap(int[] height) {
+        int[] maxLeft = new int[height.length];
+        for (int i = 0; i < height.length; i++) {
+            if (i == 0) {
+                maxLeft[i] = height[i];
+                continue;
+            }
+            maxLeft[i] = Math.max(maxLeft[i-1], height[i]);
+        }
+        int[] maxRight = new int[height.length];
+        for (int i = height.length - 1; i > 0; i--) {
+            if (i == height.length - 1) {
+                maxRight[i] = height[i];
+                continue;
+            }
+            maxRight[i] = Math.max(maxRight[i+1], height[i]);
+        }
+        int totalArea = 0;
+        for (int i = 0; i < height.length; i++) {
+            int trappedArea = Math.min(maxLeft[i], maxRight[i]) - height[i];
+            trappedArea = trappedArea < 0 ? 0 : trappedArea;
+            totalArea += trappedArea;
+        }
+        return totalArea;
+    }
+
+    public int trapTwoPointers(int[] height) {
+        int maxLeft = 0; int maxRight = 0;
+        int left = 0; int right = height.length - 1;
+        int total = 0; 
+        while (left < right) {
+            if (height[left] < height[right]) {
+                maxLeft = Math.max(maxLeft, height[left]);
+                total += maxLeft - height[left];
+                left++;
+            } else {
+                maxRight = Math.max(maxRight, height[right]);
+                total += maxRight - height[right];
+                right--;
+            }
+        }
+        return total;
+    }
 }
